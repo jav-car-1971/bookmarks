@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca de Bookmarks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .bookmarks-container {
+            max-width: 300px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* Estilo base de todas las listas */
+        .bookmark-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Estilo de los elementos de la lista */
+        .bookmark-list li {
+            position: relative;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s;
+            white-space: nowrap; /* Evita que el texto se parta en varias líneas */
+        }
+
+        .bookmark-list li:hover {
+            background-color: #e9ecef;
+        }
+        
+        /* Flecha para indicar que hay un submenú */
+        .has-submenu::after {
+            content: '►';
+            font-size: 0.8em;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Estilo de los submenús anidados */
+        .bookmark-list ul {
+            display: none; /* Por defecto, los submenús están ocultos */
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-left: 5px;
+            width: 100%;
+            min-width: 250px;
+            background-color: #fff;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Mostrar el submenú cuando el mouse pasa por el <li> */
+        .bookmark-list li:hover > ul {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="bookmarks-container">
+        <h1>Mis Bookmarks</h1>
+        <ul class="bookmark-list" id="main-menu"></ul>
+    </div>
+
+    <script>
+        const bookmarksData = [
+            {
+                name: "Programación",
+                children: [
+                    { name: "DevOps", url: "#" },
+                    { name: "Frameworks", url: "#" },
+                    {
+                        name: "Lenguajes",
+                        children: [
+                            { name: "Python", url: "https://python.org" },
+                            { name: "JavaScript", url: "https://developer.mozilla.org" },
+                            { name: "Go", url: "https://go.dev" }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: "Diseño",
+                children: [
+                    { name: "UI/UX", url: "#" },
+                    { name: "Figma", url: "https://figma.com" }
+                ]
+            },
+            {
+                name: "Noticias",
+                children: [
+                    { name: "BBC News", url: "https://bbc.com/news" },
+                    { name: "The New York Times", url: "https://nytimes.com" }
+                ]
+            }
+        ];
+
+        function createMenu(items, parentElement) {
+            items.forEach(item => {
+                const li = document.createElement('li');
+                
+                if (item.url) {
+                    const a = document.createElement('a');
+                    a.href = item.url;
+                    a.textContent = item.name;
+                    a.style.textDecoration = 'none';
+                    a.style.color = 'inherit';
+                    li.appendChild(a);
+                } else {
+                    li.textContent = item.name;
+                    li.classList.add('has-submenu');
+                }
+
+                if (item.children && item.children.length > 0) {
+                    const ul = document.createElement('ul');
+                    ul.classList.add('bookmark-list');
+                    createMenu(item.children, ul);
+                    li.appendChild(ul);
+                }
+                
+                parentElement.appendChild(li);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainMenu = document.getElementById('main-menu');
+            createMenu(bookmarksData, mainMenu);
+        });
+    </script>
+</body>
+</html>
