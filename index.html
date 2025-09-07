@@ -14,43 +14,28 @@
             transition: background-color 0.5s, color 0.5s;
         }
 
-        .main-wrapper {
+        .top-bar-wrapper {
             display: flex;
-            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
             gap: 20px;
-            padding: 20px;
-        }
-
-        .controls-container {
-            width: 300px;
-        }
-
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
             margin-bottom: 20px;
             padding: 15px;
             border-radius: 6px;
             transition: background-color 0.5s;
         }
 
-        .controls h1 {
-            text-align: center;
-            margin-top: 0;
-            border-bottom: 1px solid;
-            padding-bottom: 10px;
+        .controls-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
-        .controls label {
+        .controls-item label {
             font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
         }
 
-        .controls select, .controls button {
-            width: 100%;
-            box-sizing: border-box;
+        .controls-item select, .controls-item button {
             padding: 8px 12px;
             border-radius: 4px;
             border: 1px solid #999;
@@ -60,20 +45,21 @@
             transition: background-color 0.2s, color 0.2s;
         }
         
-        .controls button {
-            width: auto;
-        }
-
-        .controls button:hover {
+        .controls-item button:hover {
             background-color: #c0c0c0;
         }
 
-        .controls button.active {
+        .controls-item button.active {
             background-color: #5a5a5a;
             color: #fff;
             border-color: #5a5a5a;
         }
 
+        .main-content-wrapper {
+            display: flex;
+            justify-content: flex-start;
+        }
+        
         /* Contenedor de la lista de bookmarks */
         .bookmarks-container {
             width: 300px;
@@ -83,6 +69,13 @@
             padding: 10px;
         }
         
+        .bookmarks-container h1 {
+            margin-top: 0;
+            text-align: center;
+            border-bottom: 1px solid;
+            padding-bottom: 10px;
+        }
+
         .bookmark-list {
             list-style-type: none;
             padding: 0;
@@ -143,15 +136,15 @@
         body.light-mode .bookmark-list ul {
             background-color: #fff;
         }
-        body.light-mode .controls {
+        body.light-mode .top-bar-wrapper {
             background-color: #e3e3e3;
         }
-        body.light-mode .controls select, body.light-mode .controls button {
+        body.light-mode .controls-item select, body.light-mode .controls-item button {
             background-color: #d4d4d4;
             color: #333;
             border-color: #999;
         }
-        body.light-mode .controls button.active {
+        body.light-mode .controls-item button.active {
             background-color: #5a5a5a;
             color: #fff;
             border-color: #5a5a5a;
@@ -172,15 +165,15 @@
         body.dark-mode .bookmark-list ul {
             background-color: #2b2d30;
         }
-        body.dark-mode .controls {
+        body.dark-mode .top-bar-wrapper {
             background-color: #3a3c40;
         }
-        body.dark-mode .controls select, body.dark-mode .controls button {
+        body.dark-mode .controls-item select, body.dark-mode .controls-item button {
             background-color: #4a4d52;
             color: #e6e6e6;
             border-color: #666;
         }
-        body.dark-mode .controls button.active {
+        body.dark-mode .controls-item button.active {
             background-color: #1e88e5;
             color: #fff;
             border-color: #1e88e5;
@@ -188,41 +181,40 @@
     </style>
 </head>
 <body>
-    <div class="main-wrapper">
-        <div class="controls-container">
-            <div class="controls">
-                <h1>Opciones</h1>
-                <div>
-                    <label for="font-selector">Tipo de Letra:</label>
-                    <select id="font-selector">
-                        <option value="Arial, sans-serif">Sans-serif</option>
-                        <option value="Times New Roman, serif">Serif</option>
-                        <option value="'Courier New', monospace">Monospace</option>
-                        <option value="'Georgia', serif">Georgia</option>
-                        <option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino</option>
-                        <option value="'Verdana', sans-serif">Verdana</option>
-                        <option value="'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif">Trebuchet MS</option>
-                        <option value="'Gill Sans', 'Gill Sans MT', Calibri, sans-serif">Gill Sans</option>
-                        <option value="'Segoe UI', Frutiger, 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif">Segoe UI</option>
-                        <option value="'Optima', 'Candara', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif">Optima</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Tamaño:</label>
-                    <button data-size="small">A-</button>
-                    <button data-size="medium" class="active">A</button>
-                    <button data-size="large">A+</button>
-                </div>
-                <div>
-                    <label>Modo:</label>
-                    <button id="mode-toggle">Claro</button>
-                </div>
+    <div class="top-bar-wrapper">
+        <div class="controls-item">
+            <label for="font-selector">Tipo de Letra:</label>
+            <select id="font-selector">
+                <option value="Arial, sans-serif">Sans-serif</option>
+                <option value="Times New Roman, serif">Serif</option>
+                <option value="'Courier New', monospace">Monospace</option>
+                <option value="'Georgia', serif">Georgia</option>
+                <option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino</option>
+                <option value="'Verdana', sans-serif">Verdana</option>
+                <option value="'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif">Trebuchet MS</option>
+                <option value="'Gill Sans', 'Gill Sans MT', Calibri, sans-serif">Gill Sans</option>
+                <option value="'Segoe UI', Frutiger, 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif">Segoe UI</option>
+                <option value="'Optima', 'Candara', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif">Optima</option>
+            </select>
+        </div>
+        <div class="controls-item">
+            <label>Tamaño:</label>
+            <div style="display: flex; gap: 5px;">
+                <button data-size="small">A-</button>
+                <button data-size="medium" class="active">A</button>
+                <button data-size="large">A+</button>
             </div>
-            
-            <div class="bookmarks-container">
-                <h1>Mis Bookmarks</h1>
-                <ul class="bookmark-list" id="main-menu"></ul>
-            </div>
+        </div>
+        <div class="controls-item">
+            <label>Modo:</label>
+            <button id="mode-toggle">Claro</button>
+        </div>
+    </div>
+    
+    <div class="main-content-wrapper">
+        <div class="bookmarks-container">
+            <h1>Mis Bookmarks</h1>
+            <ul class="bookmark-list" id="main-menu"></ul>
         </div>
     </div>
     
@@ -306,12 +298,12 @@
         
         // Controles de usuario
         const fontSelector = document.getElementById('font-selector');
-        const sizeButtons = document.querySelectorAll('.controls button[data-size]');
+        const sizeButtons = document.querySelectorAll('[data-size]');
         const modeToggle = document.getElementById('mode-toggle');
 
         function applyStyles() {
             const selectedFont = fontSelector.value;
-            const selectedSize = document.querySelector('.controls button.active').dataset.size;
+            const selectedSize = document.querySelector('.active[data-size]').dataset.size;
             
             document.body.style.setProperty('--font-family', selectedFont);
             
@@ -369,5 +361,3 @@
     </script>
 </body>
 </html>
-    
-  
