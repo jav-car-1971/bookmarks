@@ -201,4 +201,57 @@
                         <option value="'Georgia', serif">Georgia</option>
                         <option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino</option>
                         <option value="'Verdana', sans-serif">Verdana</option>
-                        <option value="'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode
+                        <option value="'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif">Trebuchet MS</option>
+                        <option value="'Gill Sans', 'Gill Sans MT', Calibri, sans-serif">Gill Sans</option>
+                        <option value="'Segoe UI', Frutiger, 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif">Segoe UI</option>
+                        <option value="'Optima', 'Candara', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif">Optima</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Tamaño:</label>
+                    <button data-size="small">A-</button>
+                    <button data-size="medium" class="active">A</button>
+                    <button data-size="large">A+</button>
+                </div>
+                <div>
+                    <label>Modo:</label>
+                    <button id="mode-toggle">Claro</button>
+                </div>
+            </div>
+            
+            <div class="bookmarks-container">
+                <h1>Mis Bookmarks</h1>
+                <ul class="bookmark-list" id="main-menu"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const bookmarksData = [
+            {
+                name: "Programación y Desarrollo",
+                children: [
+                    {
+                        name: "Lenguajes de Programación",
+                        children: [
+                            { name: "JavaScript", url: "https://developer.mozilla.org/es/docs/Web/JavaScript" },
+                            { name: "Python", url: "https://docs.python.org/" },
+                            { name: "Rust", url: "https://www.rust-lang.org/es/" }
+                        ]
+                    },
+                    {
+                        name: "Frameworks y Librerías",
+                        children: [
+                            { name: "React", url: "https://es.react.dev/" },
+                            { name: "Vue.js", url: "https://vuejs.org/" },
+                            { name: "Django", url: "https://docs.djangoproject.com/en/5.0/" }
+                        ]
+                    },
+                    { name: "GitHub", url: "https://github.com/" },
+                    { name: "Stack Overflow", url: "https://stackoverflow.com/" }
+                ]
+            },
+            {
+                name: "Diseño y UX",
+                children: [
+                    { name: "Figma", url: "https://www.figma.com/" },
