@@ -255,3 +255,119 @@
                 name: "Diseño y UX",
                 children: [
                     { name: "Figma", url: "https://www.figma.com/" },
+                    { name: "Behance", url: "https://www.behance.net/" },
+                    { name: "Muzli", url: "https://muz.li/" }
+                ]
+            },
+            {
+                name: "Herramientas de Productividad",
+                children: [
+                    { name: "Notion", url: "https://www.notion.so/" },
+                    { name: "Trello", url: "https://trello.com/" }
+                ]
+            },
+            {
+                name: "Noticias y Blogs",
+                children: [
+                    { name: "The New York Times", url: "https://www.nytimes.com/" },
+                    { name: "BBC News", url: "https://www.bbc.com/news" },
+                    { name: "Wired", url: "https://www.wired.com/" }
+                ]
+            },
+            { name: "Buscador de Google", url: "https://www.google.com/" }
+        ];
+
+        function createMenu(items, parentElement) {
+            items.forEach(item => {
+                const li = document.createElement('li');
+                
+                if (item.url) {
+                    const a = document.createElement('a');
+                    a.href = item.url;
+                    a.textContent = item.name;
+                    a.style.textDecoration = 'none';
+                    a.style.color = 'inherit';
+                    li.appendChild(a);
+                } else {
+                    li.textContent = item.name;
+                    li.classList.add('has-submenu');
+                }
+
+                if (item.children && item.children.length > 0) {
+                    const ul = document.createElement('ul');
+                    ul.classList.add('bookmark-list');
+                    createMenu(item.children, ul);
+                    li.appendChild(ul);
+                }
+                
+                parentElement.appendChild(li);
+            });
+        }
+        
+        // Controles de usuario
+        const fontSelector = document.getElementById('font-selector');
+        const sizeButtons = document.querySelectorAll('.controls button[data-size]');
+        const modeToggle = document.getElementById('mode-toggle');
+
+        function applyStyles() {
+            const selectedFont = fontSelector.value;
+            const selectedSize = document.querySelector('.controls button.active').dataset.size;
+            
+            document.body.style.setProperty('--font-family', selectedFont);
+            
+            let fontSize = '1rem';
+            if (selectedSize === 'small') fontSize = '0.9rem';
+            if (selectedSize === 'medium') fontSize = '1rem';
+            if (selectedSize === 'large') fontSize = '1.1rem';
+
+            document.body.style.setProperty('--font-size', fontSize);
+
+            localStorage.setItem('docFont', selectedFont);
+            localStorage.setItem('docSize', selectedSize);
+        }
+
+        function toggleDarkMode() {
+            const isDarkMode = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+            modeToggle.textContent = isDarkMode ? 'Oscuro' : 'Claro';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainMenu = document.getElementById('main-menu');
+            createMenu(bookmarksData, mainMenu);
+
+            const savedFont = localStorage.getItem('docFont');
+            const savedSize = localStorage.getItem('docSize');
+            const savedMode = localStorage.getItem('darkMode');
+            
+            if (savedFont) fontSelector.value = savedFont;
+            if (savedSize) {
+                sizeButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelector(`[data-size="${savedSize}"]`).classList.add('active');
+            }
+            if (savedMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                modeToggle.textContent = 'Oscuro';
+            } else {
+                document.body.classList.add('light-mode');
+                modeToggle.textContent = 'Claro';
+            }
+
+            // Manejo de eventos
+            fontSelector.addEventListener('change', applyStyles);
+            sizeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sizeButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyStyles();
+                });
+            });
+            modeToggle.addEventListener('click', toggleDarkMode);
+
+            applyStyles();
+        });
+    </script>
+</body>
+</html>
+    
+  
